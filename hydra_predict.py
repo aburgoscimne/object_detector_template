@@ -23,9 +23,9 @@ def predict(cfg: DictConfig) -> None:
     set_seed(cfg.training.seed)
 
     test_dataset = get_test_dataset(cfg)
-    path = r'wheat\outputs\2020_05_06_09_32_36\saved_models\_ckpt_epoch_0.ckpt'
+    path = r'C:/Users/alberto/Documents/GitHub/object_detector_template/outputs/2020_07_09_19_52_14/saved_models/epoch=33_main_score=0.2985.ckpt'
 
-    model = LitWheat.load_from_checkpoint(checkpoint_path=path)
+    model = LitWheat.load_from_checkpoint(checkpoint_path=path, cfg=cfg)
     model.eval()
     test_loader = torch.utils.data.DataLoader(
         test_dataset,
@@ -39,7 +39,7 @@ def predict(cfg: DictConfig) -> None:
 
     for images, _, image_ids in test_loader:
 
-        images = (image.to(cfg.general) for image in images)
+        # images = (image.to(cfg.general.device) for image in images)
         outputs = model(images)
 
         for i, _ in enumerate(images):

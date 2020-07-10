@@ -1,4 +1,4 @@
 data:
-  folder_path: f:/wheat
+  folder_path: C:\Users\alberto\Downloads\global-wheat-detection
   num_workers: 0
   batch_size: 4

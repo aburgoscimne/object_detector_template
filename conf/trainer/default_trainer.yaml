@@ -8,3 +8,6 @@ trainer:
   gradient_clip_val: 0.5
   num_sanity_val_steps: 0
   weights_summary:
+  # fast_dev_run: True
+  # limit_train_batches: 0.05
+  # limit_val_batches: 0.1
