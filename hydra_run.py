@@ -6,6 +6,7 @@ import pytorch_lightning as pl
 import torch
 from omegaconf import DictConfig
 from pytorch_lightning.loggers import TensorBoardLogger, CometLogger
+from pytorch_lightning import seed_everything
 
 from src.lightning_classes.lightning_wheat import LitWheat
 from src.utils.loggers import JsonLogger
@@ -22,7 +23,8 @@ def run(cfg: DictConfig) -> None:
         cfg: hydra config
 
     """
-    set_seed(cfg.training.seed)
+    # set_seed(cfg.training.seed)
+    seed_everything(cfg.training.seed)
     hparams = flatten_omegaconf(cfg)
 
     model = LitWheat(hparams=hparams, cfg=cfg)
@@ -32,15 +34,15 @@ def run(cfg: DictConfig) -> None:
     lr_logger = pl.callbacks.LearningRateLogger()
 
     tb_logger = TensorBoardLogger(save_dir=cfg.general.save_dir)
-    # comet_logger = CometLogger(save_dir=cfg.general.save_dir,
-    #                            workspace=cfg.general.workspace,
-    #                            project_name=cfg.general.project_name,
-    #                            api_key=cfg.private.comet_api,
-    #                            experiment_name=os.getcwd().split('\\')[-1])
+    comet_logger = CometLogger(save_dir=cfg.general.save_dir,
+                               workspace=cfg.general.workspace,
+                               project_name=cfg.general.project_name,
+                               api_key=cfg.private.comet_api,
+                               experiment_name=os.getcwd().split('\\')[-1])
     json_logger = JsonLogger()
 
     trainer = pl.Trainer(
-        logger=[tb_logger, # comet_logger,
+        logger=[tb_logger, comet_logger,
                 json_logger],
         early_stop_callback=early_stopping,
         checkpoint_callback=model_checkpoint,

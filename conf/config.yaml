@@ -3,7 +3,7 @@ defaults:
   - trainer: default_trainer
   - training: default_training
   - logging: tensorboard
-  - optimizer: adamw
+  - optimizer: sgd
   - scheduler: plateau
   - model: basic_fastrcnn
   - callbacks: callbacks
@@ -13,7 +13,7 @@ defaults:
 
 general:
   save_dir: logs/
-  workspace: erlemar
+  workspace: aburgos
   project_name: wheat
   device: cuda
 

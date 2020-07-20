@@ -5,7 +5,7 @@ model:
       pretrained: True
       num_classes: 91
       pretrained_backbone: True
-#      trainable_backbone_layers: 5
+      # trainable_backbone_layers: 5 # Recently implemented
 
 
   head:

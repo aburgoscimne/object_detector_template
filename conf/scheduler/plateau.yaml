@@ -5,4 +5,4 @@ scheduler:
   params:
     mode: ${training.mode}
     factor: 0.1
-    patience: 5
+    patience: 3

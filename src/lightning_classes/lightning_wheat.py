@@ -64,7 +64,8 @@ class LitWheat(pl.LightningModule):
             optimizer = load_obj(self.cfg.optimizer.class_name)(params)
 
         else:
-            optimizer = load_obj(self.cfg.optimizer.class_name)(self.model.parameters(), **self.cfg.optimizer.params)
+            params = [p for p in self.model.parameters() if p.requires_grad]
+            optimizer = load_obj(self.cfg.optimizer.class_name)(params, **self.cfg.optimizer.params)
         scheduler = load_obj(self.cfg.scheduler.class_name)(optimizer, **self.cfg.scheduler.params)
 
         return [optimizer], [{'scheduler': scheduler,
